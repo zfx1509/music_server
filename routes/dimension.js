@@ -8,21 +8,29 @@ router.post('/getNetEasyUgd', function (req, res, next) {
 	pool.getConnection(function (error, connection) {
 		if (error) {
 			console.log(error);
-			return res.status(200).json({
+			return res.status(500).json({
 				error: error
 			});
 		} else {
-			connection.query("SELECT * FROM wy_para",
-				function (error, rows, fields) {
+			var sql = 'SELECT id,play_count,collect_count,share_count,comment_count FROM wy';
+			connection.query(sql,
+				function (error, rows) {
 					if (error) {
 						console.log(error);
-						return res.status(200).json({
+						return res.status(500).json({
 							error: error
 						});
 					} else {
 						connection.release();
+						var data = [];
+						var id = [];
+						rows.forEach(function (row) {
+							id.push(row.id);
+							data.push([row.play_count,row.collect_count,row.share_count,row.comment_count])
+						});
 						return res.status(200).json({
-							data: rows
+							id: id,
+							data: data
 						});
 					}
 				});

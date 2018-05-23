@@ -5,7 +5,7 @@ var mysql = require('mysql');
 var dbConfig = require('../config/musicbdConfig');
 var pool = mysql.createPool(dbConfig.mysql);
 
-var j = schedule.scheduleJob('0 0 12 * * *', function () {
+var j = schedule.scheduleJob('0 15 10 * * *', function () {
   var today = moment().format('YYYY-MM-DD').toString();
   console.log(today);
   var proxy_url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg?tpl=3&page=detail&date=' + today + '&topid=4&type=top';
